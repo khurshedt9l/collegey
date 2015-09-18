@@ -73,9 +73,10 @@ use yii\web\User;
                                     <div class="col col3">
                                      <label>Date of Birth</label>
                                     	<?php
+                                        if(isset($model->DOB)){
                                         $dateofbirth=explode(' ', $model->DOB);
                                          $dateofbirth=explode('-', $dateofbirth[0]);
-                                        echo $dateofbirth[2].'-'.$dateofbirth[1] .'-'. $dateofbirth[0];
+                                        echo $dateofbirth[2].'-'.$dateofbirth[1] .'-'. $dateofbirth[0];}
                                         ?>
                                      </div>
                                 </div>

@@ -45,12 +45,12 @@ class SiteController extends Controller
                     ],
                 ],
             ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
+//            'verbs' => [
+//                'class' => VerbFilter::className(),
+//                'actions' => [
+//                    'logout' => ['post'],
+//                ],
+//            ],
         ];
     }
 
@@ -93,7 +93,11 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            $userdetails= \Yii::$app->user->identity;
+            $user = Userform::findOne(['id'=>$userdetails->id]);
+            $url= \Yii::$app->urlManager->createUrl('user/home');
+            return $this->redirect($url, ['model' => $model,]);
+            //return $this->goBack();
         } else {
             return $this->render('login', [
                 'model' => $model,
@@ -181,7 +185,7 @@ class SiteController extends Controller
             $userModel->attributes = $_POST['Userform'];
            $valid = $userModel->validate();
             if ($valid) { 
-                $userModel->status = 0;
+                $userModel->status = 1;
                 $userModel->setPassword( $userModel->password);
                 $userModel->salt=$userModel->generateSaltkeyCustomFunction();
                 $userModel->created=new \yii\db\Expression('NOW()');

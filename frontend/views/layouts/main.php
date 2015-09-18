@@ -65,10 +65,10 @@ else
             <div class="col-lg-10 col-md-10 col-sm-9 hidden-xs">
             	<nav id="mainMenu">
                 	<ul class="clearfix">
-                    	<li><a href="university.html">University</a></li>
-                        <li><a href="university-event.html">Events</a></li>
-                        <li><a href="resources.html">Resources</a></li>
-                        <li><a href="login.html">Login</a></li>
+                            <li><a href="<?php echo \Yii::$app->urlManager->createUrl('university/index')?>">University</a></li>
+                        <li><a href="<?php echo \Yii::$app->urlManager->createUrl('event/index')?>">Events</a></li>
+                        <li><a href="<?php echo \Yii::$app->urlManager->createUrl('resource/index')?>">Resources</a></li>
+                        <li><a href="<?php echo Yii::$app->urlManager->createUrl('site/login');?>">Login</a></li>
                         <li><a href="<?php echo Yii::$app->urlManager->createUrl('site/signup');?>">Sign Up</a></li>
                     </ul>
                 </nav>
