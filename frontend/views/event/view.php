@@ -9,9 +9,11 @@ use common\models\Event;
 use common\models\University;
 use common\models\EventQuickInformation;
 use common\models\Documents;
+use common\models\Userform;
 use yii\db\Query;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
+
 //$this->title = 'Student User Profile';
 //$this->params['breadcrumbs'][] = 'User Profile';
 //echo "<pre>";print_r($model->quickinfo);die;
@@ -52,120 +54,34 @@ use yii\db\Expression;
                
             </div>            
         </div>
+            <?php
+            $profilepic=(\yii::$app->user->isGuest ?'images/default_profile_pic.jpg':'');
+            if(!\yii::$app->user->isGuest) {
+                $usermode=Userform::find()->where(['id'=>\Yii::$app->user->id])->one();
+                $profilepic=($usermode->userprofile['image']!=''?$usermode->userprofile['image']:'images/default_profile_pic.jpg');
+            ?>
         <div class="row addmarginB10">
         	<div class="col-lg-12">
             	<h3 id="live-chat" class="normal-heading text-uppercase addmarginB20">Live Chat</h3>
             </div>
         	<div class="col-lg-8 col-md-8 col-sm-7">
             	<div class="c-mainWindow shadowBox">
-                	<ul class="u-chatWindow">
-                        <li class="clearfix">
-                            <div class="c-img"><img src="images/user-1.jpg" /></div>
-                            <div class="c-chat">
-                                <span class="c-time"><i></i>10/31, 8:36pm</span>
-                                <h5 class="c-name">Sharon Smith</h5>
-                                <span class="c-type greenBg">Student</span>
-                                <p>Hello! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-                            </div>
-                        </li>
-                        <li class="clearfix">
-                            <div class="c-img"><img src="images/user-2.jpg" /></div>
-                            <div class="c-chat">
-                                <span class="c-time"><i></i>10/31, 8:36pm</span>
-                                <h5 class="c-name">Jennifer Pinsker</h5>
-                                <span class="c-type purpleBg">Re-Presentative</span>
-                                <p>Hello! Lorem ipsum dolor sit amet </p>
-                            </div>
-                        </li>
-                        <li class="clearfix">
-                            <div class="c-img"><img src="images/user-3.jpg" /></div>
-                            <div class="c-chat">
-                                <span class="c-time"><i></i>10/31, 8:36pm</span>
-                                <h5 class="c-name">Don Smith</h5>
-                                <span class="c-type greenBg">Student</span>
-                                <p>Hello! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do labore et dolore magna aliqua. </p>
-                            </div>
-                        </li>
-                        <li class="clearfix">
-                            <div class="c-img"><img src="images/user-1.jpg" /></div>
-                            <div class="c-chat">
-                                <span class="c-time"><i></i>10/31, 8:36pm</span>
-                                <h5 class="c-name">Henna Smith</h5>
-                                <span class="c-type greenBg">Student</span>
-                                <p>Hello! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-                            </div>
-                        </li>
-                        <li class="clearfix">
-                            <div class="c-img"><img src="images/user-2.jpg" /></div>
-                            <div class="c-chat">
-                                <span class="c-time"><i></i>10/31, 8:36pm</span>
-                                <h5 class="c-name">Jennifer Pinsker</h5>
-                                <span class="c-type greenBg">Student</span>
-                                <p>Hello! Lorem ipsum dolor sit amet, consectetur adipiscing elit, Hello! Lorem ipsum dolor sit amet, consectetur adipiscing elit,</p>
-                            </div>
-                        </li>                    
+                    <ul class="u-chatWindow" id="chatlog">
                     </ul>
+                    <div id="someonetyping" style="padding:10px 91px;"></div>
+		<!--<div id='conversation'></div>-->
                     <div class="c-input">
-                        <input type="text" class="form-control" placeholder="Type Here..." />
-                        <input type="submit" class="sendBtn" value="Send" />
+                        <input type="text" id="message_input" class="form-control" placeholder="Type Here..." />
+                        <input type="submit" class="sendBtn" id="sendmsgbtn" onclick="sendMessage()" value="Send" />
                     </div>
                 </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-5">
-            	<ul class="c-userList shadowBox">
-                	<li class="clearfix">
-                    	<div class="c-img"><img src="images/user-5.jpg" /></div>
-                        <div class="c-user">
-                        	<h5>John boo</h5>
-                            <span class="greenBg">Student</span>
-                        </div>
-                    </li>
-                    <li class="clearfix">
-                    	<div class="c-img"><img src="images/user-2.jpg" /></div>
-                        <div class="c-user">
-                        	<h5>Jennifer pinsker</h5>
-                            <span class="purpleBg">re-presentative</span>
-                        </div>
-                    </li>
-                    <li class="clearfix">
-                    	<div class="c-img"><img src="images/user-1.jpg" /></div>
-                        <div class="c-user">
-                        	<h5>John boo</h5>
-                            <span class="greenBg">Student</span>
-                        </div>
-                    </li>
-                    <li class="clearfix">
-                    	<div class="c-img"><img src="images/user-3.jpg" /></div>
-                        <div class="c-user">
-                        	<h5>SHARON SMITH</h5>
-                            <span class="greenBg">Student</span>
-                        </div>
-                    </li>
-                    <li class="clearfix">
-                    	<div class="c-img"><img src="images/user-4.jpg" /></div>
-                        <div class="c-user">
-                        	<h5>DON SMITH</h5>
-                            <span class="greenBg">Student</span>
-                        </div>
-                    </li>
-                    <li class="clearfix">
-                    	<div class="c-img"><img src="images/user-6.jpg" /></div>
-                        <div class="c-user">
-                        	<h5>HENNA SMITH</h5>
-                            <span class="greenBg">Student</span>
-                        </div>
-                    </li>
-                    <li class="clearfix">
-                    	<div class="c-img"><img src="images/user-7.jpg" /></div>
-                        <div class="c-user">
-                        	<h5>Sharon Smith</h5>
-                            <span class="greenBg">Student</span>
-                        </div>
-                    </li>
+            	<ul class="c-userList shadowBox" id="usersActivity">
                 </ul>
             </div>
         </div>
-        
+            <?php }?>
         <div class="row addmarginB30">
         	<div class="col-lg-12">
             	<h3 id="university-videos" class="normal-heading text-uppercase addmarginB20">Videos</h3>
@@ -270,6 +186,7 @@ use yii\db\Expression;
 </section>
 
 <!-- End Main Section -->
+
 <script type="text/javascript">	
 	$("#u-map").gmap3({
   map:{
@@ -289,4 +206,101 @@ use yii\db\Expression;
     }
   }
 });
+</script>
+<script src="http://localhost:1337/socket.io/socket.io.js"></script>
+<script type="text/javascript">
+var socketio = io.connect("http://localhost:1337");
+socketio.on("message_to_client", function(data) {
+document.getElementById("chatlog").innerHTML = ($("#chatlog").html()+'<li class="clearfix">'+
+                            '<div class="c-img"><img src="'+data['liveuserpic']+'"></div>'+
+                            '<div class="c-chat">'+
+                                '<span class="c-time"><i></i>'+data['currentdatetime']+'</span>'+
+                                '<h5 class="c-name">'+data['liveusername']+'</h5>'+
+                                '<span class="c-type greenBg">Student</span>'+
+                                '<p>'+data['message']+'</p>'+'</div></li>');                        
+});
+socketio.on('connect', function(){
+<?php if(! \Yii::$app->user->isGuest) {?>
+socketio.emit('adduser', {username:'<?php echo \Yii::$app->user->identity->username;?>',userprofilepic:'<?php echo $profilepic;?>',usertype:'<?php echo \Yii::$app->user->identity->username;?>',chatroom:'<?php echo $model->id;?>',userid:'<?php echo \Yii::$app->user->identity->id;?>'});
+<?php }?>
+});
+function switchRoom(room){
+		socketio.emit('switchRoom', room);
+}
+function sendMessage() {
+    var msg =$('#message_input').val();
+    $('#message_input').val('');
+    $('#message_input').focus();
+    <?php if(! \Yii::$app->user->isGuest) {?>
+    socketio.emit("message_to_server", { message : msg,userprofilepic:'<?php echo $profilepic ;?>',userid:<?php echo \Yii::$app->user->identity->id;?>});
+<?php }?>
+}
+$('#message_input').keypress(function(e) {
+        if(e.which == 13) {
+                $(this).blur();
+                $('#sendmsgbtn').focus().click();
+        }
+});
+//===============user isTyping?========
+var typing = false,timeout = undefined;
+       
+    function timeoutTyping() {
+        typing = false;
+        socketio.emit('typing', false);           
+    }
+$("#message_input").keypress(function(e) {
+           if(e.which !== 13) {
+             if(typing === false && $(this).is(":focus")) {
+               typing = true;
+               socketio.emit('typing',true);
+             } else {
+                 timeout = setTimeout(timeoutTyping,3000);
+            console.log('typing3.....');
+             clearTimeout(timeout);
+             
+             }
+           }
+        });
+socketio.on("isTyping",function(data) {
+           if(data.isTyping) {
+              $("#someonetyping").html(data.user+" is typing...");
+              timeout = setTimeout(timeoutTyping,3000);
+           } else {
+              $("#someonetyping").html(" ");
+           }
+        });
+//===============END user isTyping?=======
+// update user activity log
+socketio.on('updatechat', function (allusers, allpic, userstype, jointime) {
+    console.log(userstype);
+    $('#usersActivity').empty();
+    var i=1;
+          $.each(allusers, function(index, value) {
+          $('#usersActivity').append('<li id="'+value+'" class="clearfix"><div class="c-img"><img id="userpic_'+i+'" src="" /></div><div class="c-user"><h5>'+value+'</h5><span id="usertype_'+i+'" class="greenBg"></span><span id="chatjoin_'+i+'"></span></div></li>');
+          i++;});
+      var j=1;
+          $.each(allpic, function(index, value) {
+          $("#userpic_"+j).attr("src",value);
+          j++;});
+      var j=1;
+          $.each(userstype, function(index, value) {
+          $("#usertype_"+j).html('Student');
+          j++;});
+      var j=1;
+          $.each(jointime, function(index, value) {
+          $("#chatjoin_"+j).html(value);
+          j++;});
+      
+      });
+
+      
+socketio.on('leftchat', function (username, data) {
+$("#"+username).remove();
+});
+window.onbeforeunload = function() {
+    alert('sdfsdfsd');
+    <?php if(! \Yii::$app->user->isGuest) {?>
+    socketio.emit('testfunction', {userID:'<?php echo \Yii::$app->user->identity->id;?>',chatRoom:'<?php echo $model->id;?>'});
+<?php }?>
+};
 </script>

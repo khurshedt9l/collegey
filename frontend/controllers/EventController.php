@@ -11,7 +11,10 @@ class EventController extends \yii\web\Controller
 {
     public function actionIndex()
     {
-        return $this->render('index');
+        $today =date('Y-m-d 00:00:00');
+        $upcomming_event=  Event::find()->where(['>=','start_date',$today])->all();
+        $past_event=Event::find()->where(['<=','close_date',$today])->all();
+        return $this->render('index', ['upcomming_event' =>$upcomming_event, 'past_event' =>$past_event]);
     }
     public function actionCreate()
     {   

@@ -268,8 +268,7 @@ $countries=  Countries::find()->orderBy(['countryName' =>SORT_ASC])->all();
     public function actionStates(){
         
         $data='';
-            $countryId = $_POST['country_id'];
-        
+            $countryId = $_POST['country_id'];       
  
         $states = \common\models\States::find()
                 ->where(['countryID' => $countryId])
@@ -311,7 +310,8 @@ $countries=  Countries::find()->orderBy(['countryName' =>SORT_ASC])->all();
 
  
         $stateId = $_POST['state_id'];
-        $citydata = models\Cities::findAll(['stateID' => $stateId]);
+        $citydata = \common\models\Cities::find()->where(['stateID' => $stateId])->orderBy(['name' =>SORT_ASC])->all();
+        //return "asdasd";
         //$citydata = CHtml::listData($citydata, 'id', 'name');
         $citylist = "<option value=''>Select City</option>";
         if (count($citydata) > 0) {

@@ -14,6 +14,8 @@ use common\models\Contacts;
 use kartik\file\FileInput;
 use yii\web\UrlManager;
 use kartik\widgets\DatePicker;
+use kartik\typeahead\Typeahead;
+use kartik\typeahead\TypeaheadBasic;
 $rootPath = str_replace(DIRECTORY_SEPARATOR.'frontend', "", Yii::$app->basePath);
 //$this->title = 'Student User Profile';
 //$this->params['breadcrumbs'][] = 'User Profile';
@@ -102,16 +104,36 @@ $rootPath = str_replace(DIRECTORY_SEPARATOR.'frontend', "", Yii::$app->basePath)
             	<div class="redBg radius4 addmarginB30 shadowBox">
                 	<div class="padding30px">
                     	<h4 class="fnt-size20px addmarginB20 font-patua txtfff">Learn all about your dream university.</h4>
+                        <?php
+                        $data=array();
+                        $model=new University();
+                        $universityName=  University::find()->select('name')->distinct()->all();
+                        foreach($universityName as $name)
+                        {
+                            array_push($data, $name->name);
+                        }
+                        $form= ActiveForm::begin(['id'=>'search-form',
+                        'enableAjaxValidation'=>false,'enableClientValidation'=>true,'validateOnSubmit'=>true,
+                        'action' => Yii::$app->urlManager->createUrl('university/searchcollege')]);
+                        ?>
                         <div class="formElements addmarginB20">
-                        	<input type="text" class="form-control" placeholder="Search Colleges by Name">
+                        	<?php echo TypeaheadBasic::widget(['name' => 'name','id' => 'university-name','data' => $data,'scrollable' => true,
+                        'dataset' => ['limit' =>1000],'options' => ['placeholder' => 'Search colleges by name'],'pluginOptions' => ['highlight'=>true],]);
+                        ?>
                         </div>
-                        <a href="#" class="searchBtn">Search</a>
+                        <?= Html::submitButton('search' ,['class' =>'searchBtn']);?>
+                        <?php ActiveForm::end();?>
                     </div>
                 </div>
                 
                 <div class="sideBarFilters shadowBox">
                 	<div class="padding30px">
                     	<h4 class="fnt-size20px addmarginB20 font-patua">Search Colleges by program type</h4>
+                        <?php
+                        $form= ActiveForm::begin(['id'=>'search-form',
+                        'enableAjaxValidation'=>false,'enableClientValidation'=>true,'validateOnSubmit'=>true,
+                        'action' => Yii::$app->urlManager->createUrl('university/searchcollege')]);
+                        ?>
                         <div class="sb-filters">
                         	<i class="sprite i-university"></i>
                             <div class="sb-dropdown">
@@ -120,30 +142,34 @@ $rootPath = str_replace(DIRECTORY_SEPARATOR.'frontend', "", Yii::$app->basePath)
                                 </select>
                             </div>
                         </div>
-                        <a href="#" class="searchBtn">Search</a>
+                        <?= Html::submitButton('search' ,['class' =>'searchBtn']);?>
+                        <?php ActiveForm::end();?>
                     </div>
                 </div>
                 
                 <div class="sideBarFilters shadowBox">
                 	<div class="padding30px">
                     	<h4 class="fnt-size20px addmarginB20 font-patua">Search Colleges by Location</h4>
+                        <?php
+                        $form= ActiveForm::begin(['id'=>'search-form',
+                        'enableAjaxValidation'=>false,'enableClientValidation'=>true,'validateOnSubmit'=>true,
+                        'action' => Yii::$app->urlManager->createUrl('university/searchcollege')]);
+                        ?>
                         <div class="sb-filters sb-filters-2 addmarginB20">
                         	<i class="sprite i-location"></i>
                             <div class="sb-dropdown">
-                                <select data-tags="true" data-placeholder="Select State" class="form-control singleSelectBox">
-                                    <option></option>
-                                </select>
+                               <?= Html::dropDownList('state', null,ArrayHelper::map(\common\models\States::find()->orderBy(['name' =>SORT_ASC])->all(), 'id', 'name') ,['prompt'=>'Select State','class'=>'form-control singleSelectBox', 'id'=>'userprofile-state_id' ,'readonly' =>'readonly','data-tags'=>true
+                               ,'onChange'=>'signup_obj.statechange("'.Url::toRoute(['site/city']).'")']) ?>
                             </div>
                         </div>
                         <div class="sb-filters addmarginB20">
                         	<i class="sprite i-location"></i>
                             <div class="sb-dropdown">
-                                <select data-tags="true" data-placeholder="Select City" class="form-control singleSelectBox">
-                                    <option></option>
-                                </select>
+                                <?= Html::dropDownList('city', null,ArrayHelper::map(\common\models\States::find()->all(), 'id', 'name') ,['prompt'=>'Select City','class'=>'form-control singleSelectBox', 'id'=>'userprofile-city_id' ,'readonly' =>'readonly','data-tags'=>true]);?>
                             </div>
                         </div>
-                        <a href="#" class="searchBtn">Search</a>
+                        <?= Html::submitButton('search' ,['class' =>'searchBtn']);?>
+                        <?php ActiveForm::end();?>
                     </div>
                 </div>
                 

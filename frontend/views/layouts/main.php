@@ -68,8 +68,13 @@ else
                             <li><a href="<?php echo \Yii::$app->urlManager->createUrl('university/index')?>">University</a></li>
                         <li><a href="<?php echo \Yii::$app->urlManager->createUrl('event/index')?>">Events</a></li>
                         <li><a href="<?php echo \Yii::$app->urlManager->createUrl('resource/index')?>">Resources</a></li>
+                        <?php if( \Yii::$app->user->isGuest) {?>
                         <li><a href="<?php echo Yii::$app->urlManager->createUrl('site/login');?>">Login</a></li>
                         <li><a href="<?php echo Yii::$app->urlManager->createUrl('site/signup');?>">Sign Up</a></li>
+                        <?php } else {?>
+                        <li><a href="<?php echo Yii::$app->urlManager->createUrl('site/logout');?>">Logout</a></li>
+                        <?php }?>
+                        
                     </ul>
                 </nav>
             </div>

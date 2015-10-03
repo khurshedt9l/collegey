@@ -1,6 +1,10 @@
 <?php
 use yii\web\UrlManager;
 use yii\helpers\Html;
+use kartik\typeahead\TypeaheadBasic;
+use kartik\typeahead\Typeahead;
+use yii\bootstrap\ActiveForm;
+use common\models\University;
 
 /* @var $this yii\web\View */
 
@@ -24,8 +28,24 @@ $this->title = '-:: Welcome To Collegey ::-';
                 	<h1>Find your dream college <br />and get accepted</h1>
        				<p>Learn all about your dream university.</p>
                     <div class="home-search">
-                    	<input type="text" class="form-control" placeholder="search colleges by name" />
-                        <input type="submit" class="btn" onClick="location.href = 'university.html'" value="Search" />
+                        <?php
+                        $data=array();
+                        $model=new University();
+                        $universityName=  University::find()->select('name')->distinct()->all();
+                        foreach($universityName as $name)
+                        {
+                            array_push($data, $name->name);
+                        }
+                        //echo "<pre>"; print_r($data);die;
+                        $form= ActiveForm::begin(['id'=>'search-form',
+                        'enableAjaxValidation'=>false,'enableClientValidation'=>true,'validateOnSubmit'=>true,
+                        'action' => Yii::$app->urlManager->createUrl('university/searchcollege')]);
+                        echo TypeaheadBasic::widget(['name' => 'name','id' => 'university-name','data' => $data,'scrollable' => true,
+                        'dataset' => ['limit' =>1000],'options' => ['placeholder' => 'Search colleges by name'],'pluginOptions' => ['highlight'=>true],]);
+                        ?>
+                        <?= Html::submitButton('search' ,['class' =>'btn']);?>
+                        <?php ActiveForm::end();?>
+                        
                     </div>
                 </div>
             </div>

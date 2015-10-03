@@ -222,4 +222,9 @@ class BackendUser extends \yii\db\ActiveRecord implements \yii\web\IdentityInter
     {
         $this->password_reset_token = null;
     }
+       public function backvalidatePassword($password)
+    {
+        return Yii::$app->security->validatePassword($password, $this->password);
+       
+    }
 }

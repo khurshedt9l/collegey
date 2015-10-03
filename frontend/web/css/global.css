@@ -2021,7 +2021,7 @@ Site CSS
 .u-mode-profile .u-banner{ border-radius:4px 4px 0 0; overflow:hidden; min-height:300px;}
 .u-mode-profile .u-banner .editIconBtn{ position:absolute; top:15px; right:15px}
 .u-mode-profile .u-banner img{ height:100%}
-.u-mode-profile .u-banner .u-banner-img{ height:300px}
+.u-mode-profile .u-banner .u-banner-img{ height:300px;width:100%}
 .u-mode-profile .u-banner .u-logo{ position:absolute; left:60px; top:170px; width:200px}
 .u-mode-profile .u-banner .u-logo .editIconBtn{top:140px; right:10px;}
 .u-mode-profile .u-fields{ border-radius:0 0 4px 4px;-webkit-box-shadow: 0px 2px 3px 0px rgba(205,205,205,1);-moz-box-shadow: 0px 2px 3px 0px rgba(205,205,205,1);box-shadow: 0px 2px 3px 0px rgba(205,205,205,1);}
@@ -2122,7 +2122,7 @@ ul.data-previews.data-previews-col-2 li{ width:50%}
 .banner-container .banner-content p{ font-size:18px; color:#d1cecd; line-height:18px; margin:20px 0; font-weight:300;}
 .banner-container .banner-content .home-search{ position:relative; max-width:830px; margin:0 auto;}
 .banner-container .banner-content .home-search .form-control{ height:60px; font-size:20px; font-weight:300; line-height:60px; padding:0 20px; background:#fff; border-radius:4px; border:0;}
-.banner-container .banner-content .home-search .btn{ background:#f7604d url(../images/search-icon.png) no-repeat 20px 20px; padding:0 20px; display:inline-block; vertical-align:middle; border:0; height:60px; line-height:60px;border-radius: 0 4px 4px 0px;  position: absolute;  top: 0;  right: 0;  padding: 0 30px 0 50px; color:#fff; font-size:20px; font-weight:300;}
+.banner-container .banner-content .home-search .btn{ background:#f7604d url(../images/search-icon.png) no-repeat 20px 20px; padding:0 20px; display:inline-block; vertical-align:middle; border:0; height:60px; line-height:60px;border-radius: 0 4px 4px 0px;  position: absolute;  top: 0;  right: 0;  padding: 0 30px 0 50px; color:#fff; font-size:20px; font-weight:300;z-index: 10;}
 .banner-container .livechatBand{ background:#251a14; height:70px; line-height:70px; overflow:hidden; z-index:999; position:absolute; bottom:0; width:100%; left:0;}
 .banner-container .livechatBand p{ font-size:18px; color:#fff; font-weight:300;}
 .banner-container .livechatBand p img{ display:inline-block; vertical-align:middle; margin-right:20px}
@@ -2416,3 +2416,7 @@ input.displaynone{display: none};
 .lbl2{display: inline;float:right}
 .previewclearfix{clear: both;height:10px;border-bottom:2px solid #F7604D}
 .previewclearfix:last-child{clear: both;height:10px;border:none}
+//added by khurshed
+
+.tt-scrollable-menu {width: 84%;}
+

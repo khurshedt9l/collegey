@@ -110,12 +110,12 @@ class UniversityController extends Controller
             
             $downloadlink->name=$_POST['DownloadLink']['name'];
             $downloadlink->url=$_POST['DownloadLink']['url'];
-            
            if($model->save())
            {    $image_logo->saveAs ($img_move_to.$rndstrngLogo); 
                 $image_banner->saveAs ($img_move_to.$rndstrngBanner); 
                 $contactmodel->university_id=$model->id;
                 $addressmodel->university_id=$model->id;
+                
                 $implink->university_id=$model->id;
                 $downloadlink->university_id=$model->id;
                 if($addressmodel->validate() && $contactmodel->validate() && $downloadlink->validate() && $implink->validate())

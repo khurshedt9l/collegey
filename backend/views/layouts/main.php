@@ -10,7 +10,14 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use common\widgets\Alert;
 
-AppAsset::register($this);
+//AppAsset::register($this);
+$asset=backend\assets\AppAsset::register($this);
+$baseUrl=$asset->baseUrl;
+$route = Yii::$app->controller->id . '/' . $controllerId = Yii::$app->controller->action->id;
+if($route=='site/login')
+$bodyclass="hold-transition skin-blue sidebar-mini login-page";
+else
+$bodyclass="hold-transition skin-blue sidebar-mini";
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -18,59 +25,34 @@ AppAsset::register($this);
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
-<body>
+<body class="<?php echo $bodyclass;?>">
 <?php $this->beginBody() ?>
 
 <div class="wrap">
-    <?php
-    NavBar::begin([
-        'brandLabel' => 'My Company',
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
-        ],
-    ]);
-    $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-    ];
-    if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
-    } else {
-        $menuItems[] = [
-            'label' => 'Logout (' . Yii::$app->user->identity->username . ')',
-            'url' => ['/site/logout'],
-            'linkOptions' => ['data-method' => 'post']
-        ];
-    }
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => $menuItems,
-    ]);
-    NavBar::end();
-    ?>
-
-    <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?= Alert::widget() ?>
-        <?= $content ?>
-    </div>
+<?php if($route!='site/login') {?>
+		<?= $this->render('header.php',['baseUrl' => $baseUrl]);?>
+		<?= $this->render('leftmenu.php',['baseUrl' => $baseUrl]);?>
+<?php }?>		
+        <?= $this->render('content.php',['baseUrl' => $baseUrl,'content'=>$content]);?>
+<?php if($route!='site/login') {?>
+		<?= $this->render('footer.php',['baseUrl' => $baseUrl]);?>
+		<?= $this->render('rightside.php',['baseUrl' => $baseUrl]);?>
+<?php }?>
+<div class="control-sidebar-bg"></div>
 </div>
-
-<footer class="footer">
-    <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
-
-        <p class="pull-right"><?= Yii::powered() ?></p>
-    </div>
-</footer>
 <?php $this->endBody() ?>
-    <script type="text/javascript">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
+<script>
+      $.widget.bridge('uibutton', $.ui.button);
+</script>
+<script type="text/javascript">
 $(document).ready(function() {
   $(".singleSelectBox").select2({
 	 minimumResultsForSearch: Infinity,	

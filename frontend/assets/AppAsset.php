@@ -31,6 +31,8 @@ class AppAsset extends AssetBundle
         'js/owl.carousel.min.js',
         'js/jquery.superslides.min.js',
         'js/gmap3.min.js',
+        'js/imagesloaded.pkgd.min.js',
+        'js/masonry.pkgd.min.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',
